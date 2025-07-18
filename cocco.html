@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Coconut Surprise</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #f5f5dc;
+    }
+
+    #coconut {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: url('https://i.imgur.com/HT6bmgA.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    #message {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      color: lime;
+      font-weight: bold;
+      font-size: 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+<div id="coconut"></div>
+<div id="message">Sei un marijuano</div>
+
+<script>
+  const coconut = document.getElementById('coconut');
+  const message = document.getElementById('message');
+
+  let x = 100, y = 100;
+  let dx = 3, dy = 2;
+
+  const interval = setInterval(() => {
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 100;
+
+    x += dx;
+    y += dy;
+
+    if (x < 0 || x > maxX) dx = -dx;
+    if (y < 0 || y > maxY) dy = -dy;
+
+    coconut.style.left = x + 'px';
+    coconut.style.top = y + 'px';
+  }, 10);
+
+  // After 7 seconds, break the coconut and show message
+  setTimeout(() => {
+    clearInterval(interval);
+    coconut.style.backgroundImage = "url('https://i.imgur.com/UINHQKj.png')"; // cracked coconut
+    setTimeout(() => {
+      coconut.style.display = 'none';
+      message.style.display = 'flex';
+    }, 1000);
+  }, 7000);
+</script>
+
+</body>
+</html>

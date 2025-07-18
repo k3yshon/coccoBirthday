@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Siiii... la canapa!</title>
+  <style>
+    body { margin: 0; background-color: #77ab59; overflow: hidden; }
+    #scene { position: relative; width: 100vw; height: 100vh; background: url('https://i.imgur.com/Q9Zmkok.png') repeat; image-rendering: pixelated; }
+    #hunter { position: absolute; bottom: 10%; left: -100px; width: 80px; height: 80px; background: url('https://i.imgur.com/PS3bUVW.png') no-repeat center; background-size: contain; image-rendering: pixelated; }
+    .smoke { position: absolute; width: 30px; height: 30px; background: url('https://i.imgur.com/RnGa0Bl.png') no-repeat center; background-size: cover; opacity: 0.8; animation: puff 2s ease-out forwards; pointer-events: none; }
+    @keyframes puff {
+      0% { transform: scale(0.5) translateY(0); opacity: 0.8; }
+      100% { transform: scale(1.5) translateY(-80px); opacity: 0; }
+    }
+    #leaf { display: none; position: absolute; width: 80px; height: 80px; bottom: 15%; left: 60%; background: url('https://i.imgur.com/4hXeYxJ.png') no-repeat center; background-size: contain; z-index: 3; }
+    #message { display: none; position: absolute; top: 20%; left: 50%; transform: translateX(-50%); background: white; padding: 20px 40px; border: 3px solid black; border-radius: 20px; font-size: 3vw; font-weight: bold; font-family: "Comic Sans MS", sans-serif; z-index: 10; }
+  </style>
+</head>
+<body>
+  <div id="scene">
+    <div id="hunter"></div>
+    <div id="leaf"></div>
+    <div id="message">Siiiii... la canapa!</div>
+  </div>
+  <script>
+    const hunter = document.getElementById('hunter');
+    const leaf = document.getElementById('leaf');
+    const message = document.getElementById('message');
+    const scene = document.getElementById('scene');
+    let x = -100;
+    const interval = setInterval(() => {
+      x += 2;
+      hunter.style.left = x + 'px';
+      if (Math.random() < 0.2) {
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        smoke.style.left = (x + 60) + 'px';
+        smoke.style.bottom = '22%';
+        scene.appendChild(smoke);
+        setTimeout(() => smoke.remove(), 2000);
+      }
+      if (x >= window.innerWidth * 0.5) {
+        clearInterval(interval);
+        leaf.style.display = 'block';
+        setTimeout(() => message.style.display = 'block', 1000);
+      }
+    }, 30);
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Tennis Smash</title>
+  <style>
+    body {
+      margin: 0;
+      background: #1b1b1b;
+      overflow: hidden;
+      font-family: monospace;
+    }
+
+    #court {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(#006400, #004d00); /* tennis court green */
+      overflow: hidden;
+    }
+
+    .player {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background-size: cover;
+      image-rendering: pixelated;
+    }
+
+    #player1 {
+      left: 10%;
+      bottom: 10%;
+      background-image: url('https://i.imgur.com/KfzQoDZ.png'); /* player sprite */
+    }
+
+    #player2 {
+      right: 10%;
+      top: 10%;
+      background-image: url('https://i.imgur.com/KfzQoDZ.png');
+      transform: scaleX(-1); /* face left */
+    }
+
+    #ball {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: url('https://i.imgur.com/7uZzdVu.png') no-repeat center center;
+      background-size: cover;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    #crack {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/XF7UgoS.png') no-repeat center center;
+      background-size: cover;
+      z-index: 10;
+    }
+
+    #message {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      color: lime;
+      font-weight: bold;
+      font-size: 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 11;
+    }
+  </style>
+</head>
+<body>
+  <div id="court">
+    <div id="player1" class="player"></div>
+    <div id="player2" class="player"></div>
+    <div id="ball"></div>
+    <div id="crack"></div>
+    <div id="message">Sei un marijuano</div>
+  </div>
+
+  <script>
+    const ball = document.getElementById('ball');
+    const crack = document.getElementById('crack');
+    const message = document.getElementById('message');
+
+    let x = 50, y = 50;
+    let dx = 0.5, dy = 0.7;
+
+    const ballInterval = setInterval(() => {
+      x += dx;
+      y += dy;
+
+      if (x <= 5 || x >= 95) dx = -dx;
+      if (y <= 5 || y >= 95) dy = -dy;
+
+      ball.style.left = x + '%';
+      ball.style.top = y + '%';
+    }, 20);
+
+    // Smash after 7 seconds
+    setTimeout(() => {
+      clearInterval(ballInterval);
+      ball.style.transition = 'all 0.3s ease-in';
+      ball.style.left = '50%';
+      ball.style.top = '50%';
+      ball.style.transform = 'scale(10) translate(-50%, -50%)';
+      
+      setTimeout(() => {
+        ball.style.display = 'none';
+        crack.style.display = 'block';
+
+        setTimeout(() => {
+          message.style.display = 'flex';
+        }, 1000);
+      }, 600);
+    }, 7000);
+  </script>
+</body>
+</html>
